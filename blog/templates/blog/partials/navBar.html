@@ -11,6 +11,10 @@
                     <a class="nav-link {% if request.resolver_match.url_name == 'blog.index' %}active{% endif %}"
                        aria-current="page" href="{% url 'blog:blog.index' %}">Home</a>
                 </li>
+                                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'blog.index' %}active{% endif %}"
+                       aria-current="page" href="/">Back</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link {% if request.resolver_match.url_name == 'blog.create' %}active{% endif %}"
                        aria-current="page" href="{% url "blog:blog.create" %}">Add a New Blog</a>
