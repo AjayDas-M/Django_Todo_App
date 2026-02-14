@@ -1,2 +1,4 @@
 .\.vscode
 .\myenv
+.\my_todo_app\__pycache__
+.\blog\__pycache__
