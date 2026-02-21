@@ -21,10 +21,6 @@ def register(request: HttpRequest):
         password = request.POST.get('password', None)
         print(uname)
         errors = []
-        if len(fname) <= 5:
-            errors.append("First Name must have a minimum of 5 Characters")
-        if len(lname) <= 1:
-            errors.append("Last Name must have a minimum of 2 Characters")
         if len(uname) <= 6:
             errors.append("User Name must have a minimum of 6 Characters")
         if len(password) <= 8:

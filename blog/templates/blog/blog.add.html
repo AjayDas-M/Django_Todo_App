@@ -1,28 +1,17 @@
-{% extends 'blog/base.html' %}
-
-{% load django_bootstrap5 %}
-
-{% block title %}Add a Blog{% endblock title %}
-
+{% extends 'base.html' %}
 {% block mainContent %}
-    <section class="container py-3 vstack gap-3">
-        <h1 class="text-center text-decoration-underline">Add a new Blog</h1>
-
-        <div class="row">
-            <form method="POST" class="col-xl-12 mx-auto" enctype="multipart/form-data">
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm p-4">
+            <h3 class="fw-bold mb-3">{% if todo %}Update{% else %}Add{% endif %} Task</h3>
+            <form method="POST">
                 {% csrf_token %}
-                {% bootstrap_form form %}
-                {#            {% for field in form %}#}
-                {#                <div class="fieldWrapper">#}
-                {#                    {{ field.errors }}#}
-                {#                    {{ field.label_tag }} {{ field }}#}
-                {#                    {% if field.help_text %}#}
-                {#                        <p class="help">{{ field.help_text|safe }}</p>#}
-                {#                    {% endif %}#}
-                {#                </div>#}
-                {#            {% endfor %}#}
-                <button type="submit" class="btn btn-primary">Add the Blog</button>
+                <div class="mb-3">
+                    <input type="text" name="todo" class="form-control" value="{{ todo.todo }}" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100 rounded-pill">Save Task</button>
             </form>
         </div>
-    </section>
-{% endblock mainContent %}
+    </div>
+</div>
+{% endblock %}
