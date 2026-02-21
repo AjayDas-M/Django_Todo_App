@@ -2,3 +2,9 @@
 .\myenv
 .\my_todo_app\__pycache__
 .\blog\__pycache__
+.\Django_Todo_App\todo\__pycache__
+.\Django_Todo_App\todo\migrations
+.\Django_Todo_App\blog\__pycache__
+.\Django_Todo_App\blog\migrations
+.\Django_Todo_App\authentication\__pycache__
+.\Django_Todo_App\authentication\migrations

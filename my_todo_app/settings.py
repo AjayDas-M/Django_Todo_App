@@ -130,5 +130,5 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/accounts/login'
-LOGIN_REDIRECT_URL = '/blog'
+LOGIN_REDIRECT_URL = 'todos:todos.index'
 LOGOUT_REDIRECT_URL = '/'
