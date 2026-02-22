@@ -3,13 +3,24 @@
 <div class="row justify-content-center">
     <div class="col-md-6">
         <div class="card shadow-sm p-4">
-            <h3 class="fw-bold mb-3">{% if todo %}Update{% else %}Add{% endif %} Task</h3>
-            <form method="POST">
+            <h3 class="fw-bold mb-3">Add New Blog Post</h3>
+            <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                <div class="mb-3">
-                    <input type="text" name="todo" class="form-control" value="{{ todo.todo }}" required>
-                </div>
-                <button type="submit" class="btn btn-primary w-100 rounded-pill">Save Task</button>
+                
+                {% for field in form %}
+                    <div class="mb-3">
+                        <label class="form-label">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.help_text %}
+                            <div class="form-text">{{ field.help_text }}</div>
+                        {% endif %}
+                        {% for error in field.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+
+                <button type="submit" class="btn btn-primary w-100 rounded-pill">Create Blog</button>
             </form>
         </div>
     </div>
