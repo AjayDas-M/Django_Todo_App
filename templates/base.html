@@ -38,9 +38,18 @@
                         <a class="nav-link" href="{% url 'todos:todos.index' %}">My Tasks</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-info" href="#" id="userDropdown" role="button"
-                            data-bs-toggle="dropdown">
-                            {{ user.username }}
+                        <a class="nav-link dropdown-toggle text-info d-flex align-items-center" href="#"
+                            id="userDropdown" role="button" data-bs-toggle="dropdown">
+                            {% if user.profile.profile_pic %}
+                            <img src="{{ user.profile.profile_pic.url }}" alt="{{ user.username }}"
+                                class="rounded-circle me-1"
+                                style="width: 32px; height: 32px; object-fit: cover; border: 2px solid white;">
+                            {% else %}
+                            <div class="rounded-circle bg-secondary text-white d-flex justify-content-center align-items-center me-1"
+                                style="width: 32px; height: 32px; font-size: 1rem; border: 2px solid white;">
+                                {{ user.username|make_list|first|upper }}
+                            </div>
+                            {% endif %}
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end shadow">
                             <li><a class="dropdown-item" href="{% url 'blog:blog.profile' user.username %}">Profile</a>
