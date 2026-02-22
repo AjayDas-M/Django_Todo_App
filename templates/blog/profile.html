@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}{{ target_user.username }}'s Profile | TODO APP{% endblock %}
+
+{% block mainContent %}
+<div class="container py-4">
+    <!-- Profile Header (Instagram Style) -->
+    <div class="row mb-5 justify-content-center">
+        <!-- Avatar Column -->
+        <div class="col-md-4 text-center text-md-end pe-md-5 mb-4 mb-md-0">
+            {% if target_user.profile.profile_pic %}
+                <img class="rounded-circle img-thumbnail shadow-sm" style="width: 180px; height: 180px; object-fit: cover;" src="{{ target_user.profile.profile_pic.url }}" alt="{{ target_user.username }}'s Profile Picture">
+            {% else %}
+                <div class="rounded-circle bg-secondary text-white d-inline-flex justify-content-center align-items-center shadow-sm" style="width: 180px; height: 180px; font-size: 4rem;">
+                    {{ target_user.username|make_list|first|upper }}
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Details Column -->
+        <div class="col-md-6 d-flex flex-column justify-content-center">
+            <div class="d-flex align-items-center mb-3 flex-wrap">
+                <h2 class="fw-light mb-0 me-4">{{ target_user.username }}</h2>
+                
+                {% if request.user == target_user %}
+                    <a href="{% url 'blog:blog.profile_edit' %}" class="btn btn-outline-dark btn-sm fw-semibold px-3 py-1">Edit Profile</a>
+                {% endif %}
+            </div>
+
+            <div class="d-flex mb-3">
+                <span class="me-4"><strong class="fw-bold">{{ posts|length }}</strong> posts</span>
+                <span class="me-4"><strong class="fw-bold">0</strong> followers</span>
+                <span><strong class="fw-bold">0</strong> following</span>
+            </div>
+
+            <div class="profile-bio">
+                <h6 class="fw-bold mb-1">
+                    {% if target_user.first_name %}{{ target_user.first_name }} {{ target_user.last_name }}{% endif %}
+                </h6>
+                {% if target_user.email %}
+                    <a href="mailto:{{ target_user.email }}" class="text-decoration-none text-dark d-block mb-1">
+                        <small>?? {{ target_user.email }}</small>
+                    </a>
+                {% endif %}
+                {% if target_user.profile.phone %}
+                    <span class="text-muted d-block"><small>?? {{ target_user.profile.phone }}</small></span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <hr class="mb-4">
+
+    <!-- Post Grid Section -->
+    <h5 class="text-center text-muted text-uppercase mb-4 mt-2 h6 fw-bold" style="letter-spacing: 2px;">Posts</h5>
+    
+    <div class="row g-4">
+        {% for post in posts %}
+            <div class="col-4 col-md-4">
+                <a href="{% url 'blog:blog.show' post.id %}" class="text-decoration-none text-dark d-block h-100 placeholder-glow">
+                    <div class="card border-0 rounded-0 h-100 bg-light position-relative overflow-hidden" style="aspect-ratio: 1/1;">
+                        {% if post.image %}
+                            <img src="{{ post.image.url }}" class="w-100 h-100 object-fit-cover position-absolute top-0 start-0" alt="{{ post.title }}">
+                        {% else %}
+                            <div class="w-100 h-100 d-flex flex-column justify-content-center align-items-center p-3 text-center position-absolute top-0 start-0 border">
+                                <h6 class="fw-bold text-truncate w-100 px-2">{{ post.title }}</h6>
+                                <p class="small text-muted mb-0 d-none d-md-block" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; white-space: normal;">
+                                    {{ post.content|truncatechars:100 }}
+                                </p>
+                            </div>
+                        {% endif %}
+                        
+                        <!-- Hover Overlay -->
+                        <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-flex justify-content-center align-items-center opacity-0 transition-opacity" style="transition: opacity 0.2s;" onmouseover="this.classList.replace('opacity-0', 'opacity-100')" onmouseout="this.classList.replace('opacity-100', 'opacity-0')">
+                            <span class="text-white fw-bold d-flex align-items-center">
+                                <span class="fs-4 me-1">?</span> {{ post.num_of_likes }}
+                            </span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% empty %}
+            <div class="col-12 text-center py-5">
+                <div class="display-1 text-muted mb-3">??</div>
+                <h4 class="fw-light mb-3">No Posts Yet</h4>
+                {% if request.user == target_user %}
+                    <a href="{% url 'blog:blog.create' %}" class="btn btn-primary">Create Your First Post</a>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

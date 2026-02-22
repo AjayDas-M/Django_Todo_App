@@ -1,17 +1,29 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}TODO APP{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'bootstrap5/css/bootstrap.min.css' %}">
     <style>
-        body { background-color: #f8f9fa; min-height: 100vh; }
-        .navbar { box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .main-container { padding-top: 2rem; padding-bottom: 5rem; }
+        body {
+            background-color: #f8f9fa;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-container {
+            padding-top: 2rem;
+            padding-bottom: 5rem;
+        }
     </style>
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
@@ -22,23 +34,28 @@
                         <a class="nav-link" href="{% url 'blog:blog.index' %}">Blog</a>
                     </li>
                     {% if request.user.is_authenticated %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'todos:todos.index' %}">My Tasks</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-info" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
-                                {{ user.username }}
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end shadow">
-                                <li><a class="dropdown-item" href="#">Profile</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item text-danger" href="{% url 'authentication:logout' %}">Logout</a></li>
-                            </ul>
-                        </li>    
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'todos:todos.index' %}">My Tasks</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-info" href="#" id="userDropdown" role="button"
+                            data-bs-toggle="dropdown">
+                            {{ user.username }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end shadow">
+                            <li><a class="dropdown-item" href="{% url 'blog:blog.profile' user.username %}">Profile</a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item text-danger" href="{% url 'authentication:logout' %}">Logout</a>
+                            </li>
+                        </ul>
+                    </li>
                     {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'authentication:login' %}">Login</a>
-                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'authentication:login' %}">Login</a>
+                    </li>
                     {% endif %}
                 </ul>
             </div>
@@ -47,10 +64,11 @@
 
     <main class="container main-container">
         {% include "message-alert.html" %}
-        
+
         {% block mainContent %}{% endblock %}
     </main>
 
     <script src="{% static 'bootstrap5/js/bootstrap.bundle.min.js' %}"></script>
 </body>
+
 </html>

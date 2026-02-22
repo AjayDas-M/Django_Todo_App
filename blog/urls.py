@@ -10,4 +10,6 @@ urlpatterns = [
     path("edit/<int:pk>", views.updateBlog, name="blog.edit"),
     path("delete/<int:pk>", views.deleteBlog, name="blog.delete"),
     path("like/<int:pk>", views.likeBlog, name="blog.like"),
+    path("profile/edit/", views.editProfileView, name="blog.profile_edit"),
+    path("profile/<str:username>/", views.profileView, name="blog.profile"),
 ]
