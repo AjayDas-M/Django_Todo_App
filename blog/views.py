@@ -91,10 +91,12 @@ def profileView(request: HttpRequest, username: str):
     target_user = get_object_or_404(User, username=username)
     
     posts = Blog.objects.filter(user=target_user, status="A").order_by('-created_at')
+    total_likes = sum(post.num_of_likes() for post in posts)
     
     context = {
         'target_user': target_user,
-        'posts': posts
+        'posts': posts,
+        'total_likes': total_likes
     }
     return render(request, 'blog/profile.html', context)
 
